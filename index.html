@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0D1117" />
+  <title>Kürsü — Yavuz Hoca Saha Defteri</title>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <div id="toastEl" class="toast-msg"></div>
+
+  <!-- Direct Entry Install Strip -->
+  <div id="installHeroBar" class="install-hero-bar">
+    <div class="install-hero-text">
+      <span>Kürsü</span>’yü telefonunuza uygulama olarak kurun
+    </div>
+    <button id="installBtn" class="btn-install-now">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Yükle
+    </button>
+  </div>
+
+  <!-- Header -->
+  <header class="top-bar">
+    <div class="top-bar-row">
+      <div class="brand-box">
+        <img src="./icon.svg" alt="Kürsü" class="brand-icon" />
+        <div>
+          <div class="brand-title">Kürsü</div>
+          <div class="brand-sub">Yavuz Hoca’ya Hediye • Öğretmenler Gününüz Kutlu Olsun</div>
+        </div>
+      </div>
+
+      <div class="perm-status-group">
+        <button id="notifPermBtn" class="perm-pill" type="button">Bildirim İzni</button>
+        <button id="micPermBtn" class="perm-pill" type="button">Mikrofon İzni</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="content-wrap">
+
+    <!-- NOTES TAB -->
+    <section id="panel-notes" class="page-panel active">
+      <div class="strip-label-row">
+        <span class="micro-label">Sınıflar</span>
+      </div>
+
+      <div id="classRail" class="class-rail"></div>
+
+      <div class="search-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="search" id="searchInput" placeholder="Notlarda veya sınıflarda ara..." />
+      </div>
+
+      <div id="notesList" class="notes-stack"></div>
+    </section>
+
+    <!-- SCHEDULE TAB -->
+    <section id="panel-schedule" class="page-panel">
+      <div id="daysGrid" class="days-grid"></div>
+
+      <div class="schedule-top-bar">
+        <h2 id="dayHeading" style="font-size:1.02rem;font-weight:800;">Ders Programı</h2>
+        <button id="openLessonModalBtn" class="btn-soft" type="button">+ Ders Ekle</button>
+      </div>
+
+      <div id="lessonsList" class="lessons-list"></div>
+    </section>
+
+    <!-- TOOLS TAB -->
+    <section id="panel-tools" class="page-panel">
+      <div class="card-panel">
+        <h3>Etkinlik Sayacı</h3>
+        <p>Sınıf içi okuma veya alıştırma süresi için sessiz geri sayım.</p>
+        <div id="stopwatchReadout" class="stopwatch-readout">05:00</div>
+        <div class="preset-row">
+          <button class="preset-chip" data-sec="120" type="button">2 dk</button>
+          <button class="preset-chip" data-sec="300" type="button">5 dk</button>
+          <button class="preset-chip" data-sec="600" type="button">10 dk</button>
+          <button class="preset-chip" data-sec="900" type="button">15 dk</button>
+        </div>
+        <div class="action-row">
+          <button id="startTimerBtn" class="btn-solid" type="button">Başlat</button>
+          <button id="resetTimerBtn" class="btn-outline" type="button">Sıfırla</button>
+        </div>
+      </div>
+
+      <div class="card-panel">
+        <h3>Hafıza Kaydı</h3>
+        <p>Tüm notlarınız ve ders programınız cihazınızda güvenle saklanır. Buradan verileri anında cihaz hafızasına sabitleyebilirsiniz.</p>
+        <button id="saveSnapshotBtn" class="btn-outline" style="width:100%;" type="button">Verileri Cihaza Kaydet</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Composer + Navigation -->
+  <div class="bottom-dock">
+    <div class="dock-box">
+
+      <div id="detectedClassBar" class="detected-badge-bar">
+        <span id="detectedClassLabel">Algılanan Sınıf Etiketi: 8-A</span>
+        <button id="clearDetectedBtn" class="detected-clear-btn" type="button">Kapat</button>
+      </div>
+
+      <div id="inputBar" class="input-bar">
+        <div class="input-shell">
+          <select id="composerClassSelect" class="class-picker" title="Sınıf">
+            <option value="">Oto</option>
+          </select>
+          <textarea id="noteInput" rows="1" placeholder="Örn: 8a ödev verildi..."></textarea>
+        </div>
+
+        <button id="micBtn" class="round-btn mic-btn" type="button" title="Sesli Not">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        </button>
+
+        <button id="sendBtn" class="round-btn send-btn" type="button" title="Kaydet">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="tab-bar">
+        <button class="tab-btn active" data-tab="notes" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+          <span>Notlar</span>
+        </button>
+
+        <button class="tab-btn" data-tab="schedule" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          <span>Program</span>
+        </button>
+
+        <button class="tab-btn" data-tab="tools" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>Araçlar</span>
+        </button>
+      </nav>
+
+    </div>
+  </div>
+
+  <!-- Class Modal -->
+  <div id="classModal" class="modal-bg">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Sınıflar</h3>
+        <button class="icon-action close-modal" type="button">&times;</button>
+      </div>
+      <form id="addClassForm" class="field">
+        <label for="classInput">Sınıf Adı (Örn: 8A, 8-B, 7C)</label>
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="classInput" placeholder="8A" required />
+          <button type="submit" class="btn-solid" style="flex:0 0 auto;padding:0 16px;">Ekle</button>
+        </div>
+      </form>
+      <div id="classTagsList" class="class-tags-wrap"></div>
+    </div>
+  </div>
+
+  <!-- Lesson Modal -->
+  <div id="lessonModal" class="modal-bg">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Programa Ders Ekle</h3>
+        <button class="icon-action close-modal" type="button">&times;</button>
+      </div>
+      <form id="addLessonForm">
+        <div class="field">
+          <label for="lessonTimeInp">Saat</label>
+          <input type="time" id="lessonTimeInp" required />
+        </div>
+        <div class="field">
+          <label for="lessonClassInp">Sınıf</label>
+          <input type="text" id="lessonClassInp" placeholder="8A" required />
+        </div>
+        <div class="field">
+          <label for="lessonDetailInp">Açıklama (İsteğe Bağlı)</label>
+          <input type="text" id="lessonDetailInp" placeholder="İngilizce" />
+        </div>
+        <button type="submit" class="btn-solid" style="width:100%;">Kaydet</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

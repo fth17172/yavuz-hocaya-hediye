@@ -1,0 +1,18 @@
+{
+  "name": "Kürsü — Yavuz Hoca Saha Defteri",
+  "short_name": "Kürsü",
+  "description": "Öğretmenler için hızlı saha notları, akıllı sınıf algılama ve ders programı.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0D1117",
+  "theme_color": "#0D1117",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
